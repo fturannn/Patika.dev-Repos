@@ -51,7 +51,7 @@ public class CinZodyagi {
             default:
                 System.out.println("Hatalı veri girişi!");
         }
-        if (num >= 0 && num <= 11) { //Negatif yıl girilme durumuna karşılık bir koşullu ifade eklendi
+        if (num >= 0) { //Negatif yıl girilme durumuna karşılık bir koşullu ifade eklendi
             System.out.println("Çin Zodyağı Burcunuz: " + zodyak);
         }
     }
