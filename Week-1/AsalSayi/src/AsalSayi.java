@@ -1,4 +1,4 @@
-import java.util.Scanner;public class AsalSayi {
+public class AsalSayi {
     public static void main(String[] args) {
         int kalanToplam = 0;
 
