@@ -2,7 +2,7 @@ import java.util.Scanner;
 public class MinMax {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        int adet, sayi, max = 0, min = 0;
+        int adet, sayi, max, min;
 
         System.out.print("Kaç tane sayı gireceksiniz: ");
         adet = input.nextInt();
