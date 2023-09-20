@@ -37,7 +37,7 @@ public class Employee {
         }
     }
 
-    void toStrings() {
+    public String toString() {
         System.out.println("Adı: " + this.name);
         System.out.println("Maaşı: " + this.salary);
         System.out.println("Çalışma Saati: " + this.workHours);
@@ -48,6 +48,6 @@ public class Employee {
         System.out.println("Vergi ve Bonuslar ile birlikte maaş: " + (this.salary
         + bonus() - tax()));
         System.out.println("Toplam Maaş: " + (this.salary + raiseSalary()));
-
+        return null;
     }
 }

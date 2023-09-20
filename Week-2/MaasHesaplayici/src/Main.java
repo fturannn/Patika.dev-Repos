@@ -18,7 +18,7 @@ public class Main {
         hireYear = input.nextInt();
 
         Employee e1 = new Employee(name, salary, workHours, hireYear);
-        e1.toStrings();
+        e1.toString();
 
     }
 }
