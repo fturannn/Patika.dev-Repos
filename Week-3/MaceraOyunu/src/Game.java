@@ -15,6 +15,10 @@ public class Game {
 
         while (true) {
             player.printInfo();
+            if (player.getInventory().isWater() && player.getInventory().isFood() && player.getInventory().isFirewood()) {
+                System.out.println("Tebrikler adadan başarılı bir şekilde kaçtınız!");
+                break;
+            }
             System.out.println("Bölgeler:");
             System.out.println("1 - Güvenli Ev --> Güvenli bir ev, düşman yoktur.");
             System.out.println("2 - Eşya Dükkanı --> Silah ve zırh alabilirsiniz.");
