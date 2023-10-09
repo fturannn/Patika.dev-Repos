@@ -1,2 +1,5 @@
-package PACKAGE_NAME;public class Mine {
+public class Mine extends BattleLoc{
+    public Mine(Player player) {
+        super(player, "Maden", new Snake(), "", false, 5);
+    }
 }
