@@ -12,7 +12,7 @@ public class Book implements Comparable<Book>{
     }
 
     @Override public int compareTo(Book a) {
-        return this.page.compareTo(a.getPage());
+        return this.name.compareTo(a.getName());
     }
 
     public String getName() {
