@@ -19,6 +19,9 @@ public class Main {
                 System.out.println("Maaş: " + data.getInt("salary"));
                 System.out.println("------------------------------------------");
             }
+            connect.close();
+            st.close();
+            data.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
