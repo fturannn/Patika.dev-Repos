@@ -151,4 +151,17 @@ public class Course {
             throw new RuntimeException(e);
         }
     }
+
+    public static boolean update(String name, String lang, int id) {
+        String query = "UPDATE course SET name=?, lang=? WHERE id=?";
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setString(1,name);
+            pr.setString(2, lang);
+            pr.setInt(3,id);
+            return pr.executeUpdate() != -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

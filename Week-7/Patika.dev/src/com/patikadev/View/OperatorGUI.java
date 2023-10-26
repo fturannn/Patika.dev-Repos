@@ -49,6 +49,8 @@ public class OperatorGUI extends JFrame {
     private JComboBox cmb_course_patika;
     private JComboBox cmb_course_user;
     private JButton btn_course_add;
+    private JTextField fld_course_id;
+    private JButton btn_course_delete;
     private DefaultTableModel mdl_user_list;
     private Object[] row_user_list;
     private DefaultTableModel mdl_patika_list;
@@ -181,7 +183,16 @@ public class OperatorGUI extends JFrame {
         // ## PatikaList
 
         // Course List
-        mdl_course_list = new DefaultTableModel();
+        mdl_course_list = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) { // ID, Patika ve Eğitmen satırının düzenlenebilir olmasını engelleme
+                if (column == 0 || column == 3 || column == 4) {
+                    return false;
+                }
+                return super.isCellEditable(row, column);
+            }
+        };
+
         Object [] col_courseList = {"ID", "Ders Adı", "Programlama Dili", "Patika", "Eğitmen"};
         mdl_course_list.setColumnIdentifiers(col_courseList);
         row_course_list = new Object[col_courseList.length];
@@ -191,6 +202,30 @@ public class OperatorGUI extends JFrame {
         tbl_course_list.getTableHeader().setReorderingAllowed(false);
         loadPatikaCombo();
         loadEducatorCombo();
+
+        // Seçtiğimiz satırdaki id'yi fld_user_id kutucuğuna getirir.
+        tbl_course_list.getSelectionModel().addListSelectionListener(e -> {
+            try {
+                String select_course_id = tbl_course_list.getValueAt(tbl_course_list.getSelectedRow(), 0).toString();
+                fld_course_id.setText(select_course_id);
+            } catch (Exception ignored){
+            }
+        });
+
+        tbl_course_list.getModel().addTableModelListener(e -> {
+            if(e.getType() == TableModelEvent.UPDATE) {
+                int course_id = Integer.parseInt(tbl_course_list.getValueAt(tbl_course_list.getSelectedRow(), 0).toString());
+                String course_name = tbl_course_list.getValueAt(tbl_course_list.getSelectedRow(), 1).toString();
+                String course_lang = tbl_course_list.getValueAt(tbl_course_list.getSelectedRow(), 2).toString();
+
+                if(Course.update(course_name, course_lang, course_id)) {
+                    Helper.showMsg("done");
+                }
+                loadEducatorCombo();
+                loadCourseModel();
+            }
+        });
+
         // ## Course List
 
         // Tabloya kullanıcı ekleme
@@ -274,6 +309,25 @@ public class OperatorGUI extends JFrame {
                     fld_course_lang.setText(null);
                 } else {
                     Helper.showMsg("error");
+                }
+            }
+        });
+
+        btn_course_delete.addActionListener(e -> {
+            if(Helper.isFieldEmpty(fld_course_id)) {
+                Helper.showMsg("fill");
+            } else {
+                if (Helper.confirm("sure")) {
+                    int course_id = Integer.parseInt(fld_course_id.getText());
+                    if(Course.delete(course_id)) {
+                        Helper.showMsg("done");
+                        loadUserModel();
+                        loadEducatorCombo();
+                        loadCourseModel();
+                        fld_course_id.setText(null);
+                    } else {
+                        Helper.showMsg("error");
+                    }
                 }
             }
         });
