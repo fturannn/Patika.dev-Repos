@@ -164,4 +164,20 @@ public class Course {
             throw new RuntimeException(e);
         }
     }
+
+    public static Course getFetch(int id) {
+        Course obj = null;
+        String query = "SELECT * FROM course WHERE id = ?";
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setInt(1, id);
+            ResultSet rs = pr.executeQuery();
+            if (rs.next()) {
+                obj = new Course(rs.getInt("id"), rs.getInt("user_id"), rs.getInt("patika_id"), rs.getString("name"), rs.getString("lang"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return obj;
+    }
 }
