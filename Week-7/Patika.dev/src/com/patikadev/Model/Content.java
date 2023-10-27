@@ -1,6 +1,7 @@
 package com.patikadev.Model;
 
 import com.patikadev.Helper.DBConnector;
+import com.patikadev.Helper.Helper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +16,8 @@ public class Content {
     private String description;
     private String link;
     private Course course;
+
+    public Content() {}
 
     public Content(int id, int course_id, String name, String description, String link) {
         this.id = id;
@@ -94,15 +97,56 @@ public class Content {
         return contentList;
     }
 
-    public static boolean add(int course_id, String name, String description, String link, String course) {
+    public static boolean add(int course_id, String name,String description, String link, String course) {
         String query = "INSERT INTO content  (course_id, name, description, link, course) VALUES (?,?,?,?,?)";
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
-            pr.setInt(1,course_id);
+            pr.setInt(1, course_id);
             pr.setString(2,name);
             pr.setString(3,description);
             pr.setString(4,link);
             pr.setString(5,course);
+            return pr.executeUpdate() != -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String searchQuery(String course, String name) {
+        String query = "SELECT * FROM content WHERE course LIKE '%{{course}}%' AND name LIKE '%{{name}}%'";
+        query = query.replace("{{course}}", course);
+        query = query.replace("{{name}}", name);
+        return query;
+    }
+
+    public static ArrayList<Content> searchContentList (String query) {
+        ArrayList<Content> contentList = new ArrayList<>();
+        Content obj;
+        try {
+            Statement st = DBConnector.getInstance().createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                obj = new Content();
+                obj.setId(rs.getInt("id"));
+                obj.setCourse_id(rs.getInt("course_id"));
+                obj.setName(rs.getString("name"));
+                obj.setDescription(rs.getString("description"));
+                obj.setLink(rs.getString("link"));
+                obj.setCourse(Course.getFetch(rs.getInt("course_id")));
+                contentList.add(obj);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return contentList;
+    }
+
+    public static boolean delete(int contentId) {
+        String query = "DELETE FROM content WHERE id = ?";
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setInt(1,contentId);
+
             return pr.executeUpdate() != -1;
         } catch (SQLException e) {
             throw new RuntimeException(e);
