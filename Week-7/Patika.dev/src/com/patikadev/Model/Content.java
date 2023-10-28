@@ -97,7 +97,7 @@ public class Content {
         return contentList;
     }
 
-    public static boolean add(int course_id, String name,String description, String link, String course) {
+    public static boolean add(int course_id, String name, String description, String link, String course) {
         String query = "INSERT INTO content  (course_id, name, description, link, course) VALUES (?,?,?,?,?)";
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
@@ -143,10 +143,15 @@ public class Content {
 
     public static boolean delete(int contentId) {
         String query = "DELETE FROM content WHERE id = ?";
+        ArrayList<Quiz> quizList = Quiz.getList();
+        for(Quiz obj : quizList) {
+            if (obj.getContent_id() == contentId) {
+                Quiz.delete(obj.getId());
+            }
+        }
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
             pr.setInt(1,contentId);
-
             return pr.executeUpdate() != -1;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -155,6 +160,12 @@ public class Content {
 
     public static boolean update(int content_id, String content_name, String content_description, String content_link, String course) {
         String query = "UPDATE content SET name=?, description=?, link=? WHERE id=?";
+        ArrayList<Quiz> quizList = Quiz.getList();
+        for(Quiz obj : quizList) {
+            if (obj.getContent_id() == content_id) {
+                Quiz.update(obj.getId(), content_id, content_name);
+            }
+        }
         if (!Helper.courseList().contains(course)) {
             Helper.showMsg("Lütfen mevcut dersler isimlerinden birini girin!");
             return false;
@@ -169,5 +180,21 @@ public class Content {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static Content getFetch(int id) {
+        Content obj = null;
+        String query = "SELECT * FROM content WHERE id = ?";
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setInt(1, id);
+            ResultSet rs = pr.executeQuery();
+            if (rs.next()) {
+                obj = new Content(rs.getInt("id"), rs.getInt("course_id"), rs.getString("name"), rs.getString("description"), rs.getString("link"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return obj;
     }
 }

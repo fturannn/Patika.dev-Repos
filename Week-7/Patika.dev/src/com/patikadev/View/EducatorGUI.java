@@ -8,6 +8,8 @@ import com.patikadev.Model.*;
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class EducatorGUI extends JFrame{
@@ -127,6 +129,8 @@ public class EducatorGUI extends JFrame{
                 }
                 loadContentModel();
                 loadCourseCombo();
+                loadQuizModel();
+                loadContentCombo();
             }
         });
 
@@ -136,7 +140,7 @@ public class EducatorGUI extends JFrame{
         mdl_quiz_list = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
-                if (column == 0 || column == 1) {
+                if (column == 0 || column == 1 || column == 2) {
                     return false;
                 }
                 return super.isCellEditable(row, column);
@@ -151,6 +155,31 @@ public class EducatorGUI extends JFrame{
         tbl_quiz_list.getColumnModel().getColumn(0).setMaxWidth(75);
         tbl_quiz_list.getColumnModel().getColumn(1).setMaxWidth(75);
         tbl_quiz_list.getTableHeader().setReorderingAllowed(false);
+        loadContentCombo();
+        loadQuizModel();
+
+        tbl_quiz_list.getSelectionModel().addListSelectionListener(e -> {
+            try {
+                String select_quiz_id = tbl_quiz_list.getValueAt(tbl_quiz_list.getSelectedRow(), 0).toString();
+                fld_quiz_id.setText(select_quiz_id);
+            } catch (Exception ignored){
+            }
+        });
+
+        tbl_quiz_list.getModel().addTableModelListener(e -> {
+            if(e.getType() == TableModelEvent.UPDATE) {
+                int quiz_id = Integer.parseInt(tbl_quiz_list.getValueAt(tbl_quiz_list.getSelectedRow(), 0).toString());
+                int content_id = Integer.parseInt(tbl_quiz_list.getValueAt(tbl_quiz_list.getSelectedRow(), 1).toString());
+                String content_name = tbl_quiz_list.getValueAt(tbl_quiz_list.getSelectedRow(), 2).toString();
+                String question = tbl_quiz_list.getValueAt(tbl_quiz_list.getSelectedRow(), 3).toString();
+                loadContentModel();
+                if(Quiz.update(quiz_id, content_id, content_name, question)) {
+                    Helper.showMsg("done");
+                }
+                loadQuizModel();
+                loadContentCombo();
+            }
+        });
 
         // ## Quiz List
 
@@ -162,6 +191,8 @@ public class EducatorGUI extends JFrame{
                 if (Content.add(courseItem.getKey(),fld_content_name.getText(), fld_content_desc.getText(), fld_content_link.getText(), courseItem.getValue())) {
                     Helper.showMsg("done");
                     loadContentModel();
+                    loadQuizModel();
+                    loadContentCombo();
                     fld_content_name.setText(null);
                     fld_content_desc.setText(null);
                     fld_content_link.setText(null);
@@ -188,7 +219,45 @@ public class EducatorGUI extends JFrame{
                         Helper.showMsg("done");
                         loadContentModel();
                         loadCourseCombo();
+                        loadQuizModel();
                         fld_content_id.setText(null);
+                    } else {
+                        Helper.showMsg("error");
+                    }
+                }
+            }
+        });
+
+        btn_logout.addActionListener(e -> {
+            dispose();
+            LoginGUI login = new LoginGUI();
+        });
+
+        btn_quiz_add.addActionListener(e -> {
+            Item contentItem = (Item) cmb_content.getSelectedItem();
+            if(Helper.isFieldEmpty(fld_quiz)) {
+                Helper.showMsg("fill");
+            } else {
+                if (Quiz.add(contentItem.getKey(),contentItem.getValue(), fld_quiz.getText())) {
+                    Helper.showMsg("done");
+                    loadQuizModel();
+                    fld_quiz.setText(null);
+                } else {
+                    Helper.showMsg("error");
+                }
+            }
+        });
+        btn_quiz_delete.addActionListener(e -> {
+            if(Helper.isFieldEmpty(fld_quiz_id)) {
+                Helper.showMsg("fill");
+            } else {
+                if (Helper.confirm("sure")) {
+                    int quiz_id = Integer.parseInt(fld_quiz_id.getText());
+                    if(Quiz.delete(quiz_id)) {
+                        Helper.showMsg("done");
+                        loadQuizModel();
+                        loadContentCombo();
+                        fld_quiz_id.setText(null);
                     } else {
                         Helper.showMsg("error");
                     }
@@ -197,17 +266,34 @@ public class EducatorGUI extends JFrame{
         });
     }
 
+    private void loadQuizModel() {
+        DefaultTableModel clearModel = (DefaultTableModel) tbl_quiz_list.getModel();
+        clearModel.setRowCount(0);
+        for (Quiz obj : Quiz.getList()) {
+            if(obj.getContent().getCourse().getEducater().getName().equals(educator.getName())) {
+                int i = 0;
+                row_quiz_list[i++] = obj.getId();
+                row_quiz_list[i++] = obj.getContent_id();
+                row_quiz_list[i++] = obj.getContent().getName();
+                row_quiz_list[i++] = obj.getQuestion();
+                mdl_quiz_list.addRow(row_quiz_list);
+            }
+        }
+    }
+
     private void loadContentModel() {
         DefaultTableModel clearModel = (DefaultTableModel) tbl_course_content.getModel();
         clearModel.setRowCount(0);
         for (Content obj : Content.getList()) {
-            int i = 0;
-            row_content_list[i++] = obj.getId();
-            row_content_list[i++] = obj.getName();
-            row_content_list[i++] = obj.getDescription();
-            row_content_list[i++] = obj.getLink();
-            row_content_list[i++] = obj.getCourse().getName();
-            mdl_content_list.addRow(row_content_list);
+            if(obj.getCourse().getEducater().getName().equals(educator.getName())) {
+                int i = 0;
+                row_content_list[i++] = obj.getId();
+                row_content_list[i++] = obj.getName();
+                row_content_list[i++] = obj.getDescription();
+                row_content_list[i++] = obj.getLink();
+                row_content_list[i++] = obj.getCourse().getName();
+                mdl_content_list.addRow(row_content_list);
+            }
         }
     }
 
@@ -215,13 +301,15 @@ public class EducatorGUI extends JFrame{
         DefaultTableModel clearModel = (DefaultTableModel) tbl_course_content.getModel();
         clearModel.setRowCount(0);
         for (Content obj : list) {
-            int i = 0;
-            row_content_list[i++] = obj.getId();
-            row_content_list[i++] = obj.getName();
-            row_content_list[i++] = obj.getDescription();
-            row_content_list[i++] = obj.getLink();
-            row_content_list[i++] = obj.getCourse().getName();
-            mdl_content_list.addRow(row_content_list);
+            if(obj.getCourse().getEducater().getName().equals(educator.getName())) {
+                int i = 0;
+                row_content_list[i++] = obj.getId();
+                row_content_list[i++] = obj.getName();
+                row_content_list[i++] = obj.getDescription();
+                row_content_list[i++] = obj.getLink();
+                row_content_list[i++] = obj.getCourse().getName();
+                mdl_content_list.addRow(row_content_list);
+            }
         }
     }
 
@@ -246,6 +334,15 @@ public class EducatorGUI extends JFrame{
         for(Course obj : Course.getList()) {
             if(obj.getEducater().getName().equals(educator.getName())) {
                 cmb_course.addItem(new Item(obj.getId(), obj.getName()));
+            }
+        }
+    }
+
+    public void loadContentCombo() {
+        cmb_content.removeAllItems();
+        for(Content obj : Content.getList()) {
+            if(obj.getCourse().getEducater().getName().equals(educator.getName())) {
+                cmb_content.addItem(new Item(obj.getId(), obj.getName()));
             }
         }
     }
