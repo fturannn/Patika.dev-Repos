@@ -1,5 +1,7 @@
 package com.patikadev.Helper;
 
+import com.patikadev.Model.Course;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -88,5 +90,13 @@ public class Helper {
         typeList.add("educater");
         typeList.add("student");
         return typeList;
+    }
+
+    public static ArrayList<String> courseList() {
+        ArrayList<String> courseList = new ArrayList<>();
+        for(Course i : Course.getList()) {
+            courseList.add(i.getName());
+        }
+        return courseList;
     }
 }

@@ -152,4 +152,22 @@ public class Content {
             throw new RuntimeException(e);
         }
     }
+
+    public static boolean update(int content_id, String content_name, String content_description, String content_link, String course) {
+        String query = "UPDATE content SET name=?, description=?, link=? WHERE id=?";
+        if (!Helper.courseList().contains(course)) {
+            Helper.showMsg("Lütfen mevcut dersler isimlerinden birini girin!");
+            return false;
+        }
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setString(1, content_name);
+            pr.setString(2, content_description);
+            pr.setString(3, content_link);
+            pr.setInt(4, content_id);
+            return pr.executeUpdate() != -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -6,6 +6,7 @@ import com.patikadev.Helper.Item;
 import com.patikadev.Model.*;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
@@ -38,10 +39,14 @@ public class EducatorGUI extends JFrame{
     private JComboBox cmb_content;
     private JTextField fld_quiz;
     private JButton btn_quiz_add;
+    private JTextField fld_quiz_id;
+    private JButton btn_quiz_delete;
     private DefaultTableModel mdl_course_list;
     private Object [] row_course_list;
     private DefaultTableModel mdl_content_list;
     private Object [] row_content_list;
+    private DefaultTableModel mdl_quiz_list;
+    private Object [] row_quiz_list;
 
     private final Educator educator;
 
@@ -84,7 +89,7 @@ public class EducatorGUI extends JFrame{
         mdl_content_list = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
-                if (column == 0) {
+                if (column == 0 || column == 4) {
                     return false;
                 }
                 return super.isCellEditable(row, column);
@@ -109,7 +114,45 @@ public class EducatorGUI extends JFrame{
             }
         });
 
+        tbl_course_content.getModel().addTableModelListener(e -> {
+            if(e.getType() == TableModelEvent.UPDATE) {
+                int content_id = Integer.parseInt(tbl_course_content.getValueAt(tbl_course_content.getSelectedRow(), 0).toString());
+                String content_name = tbl_course_content.getValueAt(tbl_course_content.getSelectedRow(), 1).toString();
+                String content_description = tbl_course_content.getValueAt(tbl_course_content.getSelectedRow(), 2).toString();
+                String content_link = tbl_course_content.getValueAt(tbl_course_content.getSelectedRow(), 3).toString();
+                String course_name = tbl_course_content.getValueAt(tbl_course_content.getSelectedRow(), 4).toString();
+                loadCourseModel();
+                if(Content.update(content_id, content_name, content_description, content_link, course_name)) {
+                    Helper.showMsg("done");
+                }
+                loadContentModel();
+                loadCourseCombo();
+            }
+        });
+
         // ## Content List
+
+        // Quiz List
+        mdl_quiz_list = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if (column == 0 || column == 1) {
+                    return false;
+                }
+                return super.isCellEditable(row, column);
+            }
+        };
+        Object[] col_quiz_list = {"ID", "İçerik ID", "İçerik", "Soru"};
+        mdl_quiz_list.setColumnIdentifiers(col_quiz_list);
+
+        row_quiz_list = new Object[col_quiz_list.length];
+
+        tbl_quiz_list.setModel(mdl_quiz_list);
+        tbl_quiz_list.getColumnModel().getColumn(0).setMaxWidth(75);
+        tbl_quiz_list.getColumnModel().getColumn(1).setMaxWidth(75);
+        tbl_quiz_list.getTableHeader().setReorderingAllowed(false);
+
+        // ## Quiz List
 
         btn_add_content.addActionListener(e -> {
             Item courseItem = (Item) cmb_course.getSelectedItem();
