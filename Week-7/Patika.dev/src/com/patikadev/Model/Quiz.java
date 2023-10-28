@@ -124,4 +124,20 @@ public class Quiz {
             throw new RuntimeException(e);
         }
     }
+
+    public static Quiz getFetch(int quizId) {
+        Quiz obj = null;
+        String query = "SELECT * FROM quiz WHERE id = ?";
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setInt(1, quizId);
+            ResultSet rs = pr.executeQuery();
+            if (rs.next()) {
+                obj = new Quiz(rs.getInt("id"), rs.getInt("content_id"), rs.getString("content"), rs.getString("question"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return obj;
+    }
 }
