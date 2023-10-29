@@ -119,33 +119,24 @@ public class Registered {
         return registeredList;
     }
 
-    public static ArrayList<Registered> getListByContent(int contentId) {
-        ArrayList<Registered> registeredList = new ArrayList<>();
-        Registered obj;
-        try {
-            Statement st = DBConnector.getInstance().createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM registered WHERE content_id = " + contentId);
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                int course_id = rs.getInt("course_id");
-                int content_id = rs.getInt("content_id");
-                String comment = rs.getString("comment");
-                int rating = rs.getInt("rating");
-                obj = new Registered(id, course_id, content_id, comment, rating);
-                registeredList.add(obj);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return registeredList;
-    }
-
     public static boolean drop(int courseId) {
         String query = "DELETE FROM registered WHERE course_id = ?";
         try {
             PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
             pr.setInt(1,courseId);
 
+            return pr.executeUpdate() != -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean update(String comment, int selectedId) {
+        String query = "UPDATE registered SET comment=? WHERE id=?";
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setString(1,comment);
+            pr.setInt(2, selectedId);
             return pr.executeUpdate() != -1;
         } catch (SQLException e) {
             throw new RuntimeException(e);

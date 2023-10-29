@@ -174,6 +174,22 @@ public class StudentGUI  extends JFrame{
             }
 
         });
+
+        btn_comment.addActionListener(e -> {
+            if(Helper.isFieldEmpty(fld_comment) || Helper.isFieldEmpty(fld_chose)) {
+                Helper.showMsg("fill");
+            } else {
+                int selected_id = Integer.parseInt(fld_chose.getText());
+                if (Registered.update(fld_comment.getText(), selected_id)) {
+                    Helper.showMsg("done");
+                    loadRegisteredCoursesModel();
+                    loadCourseCombo();
+                    fld_comment.setText(null);
+                } else {
+                    Helper.showMsg("error");
+                }
+            }
+        });
     }
 
     private void loadRegisteredCoursesModel() {
