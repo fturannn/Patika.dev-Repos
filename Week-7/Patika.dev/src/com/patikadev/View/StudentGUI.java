@@ -153,7 +153,7 @@ public class StudentGUI  extends JFrame{
                     for (Content obj : Content.getList()) {
                         if(obj.getCourse().getName().equals(Course.getFetch(course_id).getName())) {
                             int content_id = obj.getId();
-                            Registered.add(course_id, Course.getFetch(course_id).getName(), content_id, Content.getFetch(content_id).getName());
+                            Registered.add(student.getId(), course_id, Course.getFetch(course_id).getName(), content_id, Content.getFetch(content_id).getName());
                         }
                     }
                     Helper.showMsg("done");
@@ -221,13 +221,15 @@ public class StudentGUI  extends JFrame{
         clearModel.setRowCount(0);
         int i = 0;
         for (Registered obj : Registered.getList()) {
-            i = 0;
-            row_registered_courses[i++] = obj.getId();
-            row_registered_courses[i++] = obj.getCourse().getName();
-            row_registered_courses[i++] = obj.getContent().getName();
-            row_registered_courses[i++] = obj.getComment();
-            row_registered_courses[i++] = obj.getRating();
-            mdl_registered_courses.addRow(row_registered_courses);
+            if(obj.getStudent_id() == student.getId()) {
+                i = 0;
+                row_registered_courses[i++] = obj.getId();
+                row_registered_courses[i++] = obj.getCourse().getName();
+                row_registered_courses[i++] = obj.getContent().getName();
+                row_registered_courses[i++] = obj.getComment();
+                row_registered_courses[i++] = obj.getRating();
+                mdl_registered_courses.addRow(row_registered_courses);
+            }
         }
     }
 
@@ -262,7 +264,7 @@ public class StudentGUI  extends JFrame{
         for(Course obj : Course.getList()) {
             int count = 0;
             for(Registered obj2 : Registered.getList()) {
-                if(obj.getId() == obj2.getCourse_id()) {
+                if(obj.getId() == obj2.getCourse_id() && obj2.getStudent_id() == student.getId()) {
                     if (count == 0) {
                         cmb_drop.addItem(new Item(obj.getId(), obj.getName()));
                     } else {
