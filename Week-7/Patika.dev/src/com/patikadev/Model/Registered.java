@@ -142,4 +142,16 @@ public class Registered {
             throw new RuntimeException(e);
         }
     }
+
+    public static boolean update(int rating, int selectedId) {
+        String query = "UPDATE registered SET rating=? WHERE id=?";
+        try {
+            PreparedStatement pr = DBConnector.getInstance().prepareStatement(query);
+            pr.setInt(1,rating);
+            pr.setInt(2, selectedId);
+            return pr.executeUpdate() != -1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

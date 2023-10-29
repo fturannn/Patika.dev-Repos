@@ -32,6 +32,11 @@ public class StudentGUI  extends JFrame{
     private JButton btn_rate;
     private JButton btn_drop;
     private JComboBox cmb_drop;
+    private JPanel pnl_quiz;
+    private JTable table1;
+    private JTextField fld_chose_question;
+    private JTextField fld_answer;
+    private JButton btn_answer;
     private JTextField fld_drop;
     private DefaultTableModel mdl_patika_list;
     private Object [] row_patika_list;
@@ -185,6 +190,25 @@ public class StudentGUI  extends JFrame{
                     loadRegisteredCoursesModel();
                     loadCourseCombo();
                     fld_comment.setText(null);
+                    fld_chose.setText(null);
+                } else {
+                    Helper.showMsg("error");
+                }
+            }
+        });
+
+        btn_rate.addActionListener(e -> {
+                String selected_Rate = cmb_rate.getSelectedItem().toString();
+                int selectedRate = Integer.parseInt(selected_Rate);
+            if(Helper.isFieldEmpty(fld_chose)) {
+                Helper.showMsg("fill");
+            } else {
+                int selected_id = Integer.parseInt(fld_chose.getText());
+                if (Registered.update(selectedRate, selected_id)) {
+                    Helper.showMsg("done");
+                    loadRegisteredCoursesModel();
+                    loadCourseCombo();
+                    fld_chose.setText(null);
                 } else {
                     Helper.showMsg("error");
                 }
