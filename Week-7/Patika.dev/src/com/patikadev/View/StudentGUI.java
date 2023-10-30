@@ -7,6 +7,8 @@ import com.patikadev.Model.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class StudentGUI  extends JFrame{
     private JPanel wrapper;
@@ -33,10 +35,11 @@ public class StudentGUI  extends JFrame{
     private JButton btn_drop;
     private JComboBox cmb_drop;
     private JPanel pnl_quiz;
-    private JTable table1;
+    private JTable tbl_question;
     private JTextField fld_chose_question;
     private JTextField fld_answer;
     private JButton btn_answer;
+    private JScrollPane scrl_question;
     private JTextField fld_drop;
     private DefaultTableModel mdl_patika_list;
     private Object [] row_patika_list;
@@ -44,6 +47,8 @@ public class StudentGUI  extends JFrame{
     private Object [] row_register;
     private DefaultTableModel mdl_registered_courses;
     private Object [] row_registered_courses;
+    private DefaultTableModel mdl_question;
+    private Object [] row_question;
 
     private final Student student;
 
@@ -144,6 +149,36 @@ public class StudentGUI  extends JFrame{
 
         // ## Registered Courses
 
+        // Question List
+        mdl_question = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                if (column == 0) {
+                    return false;
+                }
+                return super.isCellEditable(row, column);
+            }
+        };
+        Object[] col_question = {"ID", "İçerik", "Soru", "Yanıt"};
+        mdl_question.setColumnIdentifiers(col_question);
+
+        row_question = new Object[col_question.length];
+
+        tbl_question.setModel(mdl_question);
+        tbl_question.getColumnModel().getColumn(0).setMaxWidth(75);
+        tbl_question.getTableHeader().setReorderingAllowed(false);
+        loadQuestionModel();
+
+        tbl_question.getSelectionModel().addListSelectionListener(e -> {
+            try {
+                String select_id = tbl_question.getValueAt(tbl_question.getSelectedRow(), 0).toString();
+                fld_chose_question.setText(select_id);
+            } catch (Exception ignored){
+            }
+        });
+
+        // ## Question List
+
         btn_register.addActionListener(e -> {
             if(Helper.isFieldEmpty(fld_course_id)) {
                 Helper.showMsg("fill");
@@ -159,9 +194,23 @@ public class StudentGUI  extends JFrame{
                     Helper.showMsg("done");
                     fld_course_id.setText(null);
                     loadRegisteredCoursesModel();
+                    loadQuestionModel();
                     loadCourseCombo();
+                    for (Quiz obj : Quiz.getList()) {
+                        for (Registered obj2: Registered.getList()) {
+                            if (obj2.getStudent_id() == student.getId() && obj.getContent_id() == obj2.getContent_id()) {
+                                Answer.add(student.getId(), obj.getId(), obj2.getContent().getName(), obj.getQuestion(), null);
+                            }
+                        }
+                    }
+                    loadQuestionModel();
                 }
             }
+        });
+
+        btn_logout.addActionListener(e -> {
+            dispose();
+            LoginGUI login = new LoginGUI();
         });
 
         btn_drop.addActionListener(e -> {
@@ -214,12 +263,46 @@ public class StudentGUI  extends JFrame{
                 }
             }
         });
+
+        btn_answer.addActionListener(e -> {
+            if(Helper.isFieldEmpty(fld_answer) || Helper.isFieldEmpty(fld_chose_question)) {
+                Helper.showMsg("fill");
+            } else {
+                int selected_id = Integer.parseInt(fld_chose_question.getText());
+                if (Answer.update(fld_answer.getText(), selected_id)) {
+                    Helper.showMsg("done");
+                    loadQuestionModel();
+                    fld_answer.setText(null);
+                    fld_chose_question.setText(null);
+                } else {
+                    Helper.showMsg("error");
+                }
+            }
+        });
+    }
+
+    private void loadQuestionModel() {
+        DefaultTableModel clearModel = (DefaultTableModel) tbl_question.getModel();
+        clearModel.setRowCount(0);
+        int i;
+        for (Quiz obj : Quiz.getList()) {
+            for (Answer obj2: Answer.getList()) {
+                if (obj2.getStudent_id() == student.getId() && obj.getId() == obj2.getQuiz_id()) {
+                    i = 0;
+                    row_question[i++] = obj.getId();
+                    row_question[i++] = obj.getContent().getName();
+                    row_question[i++] = obj.getQuestion();
+                    row_question[i++] = obj2.getAnswer();
+                    mdl_question.addRow(row_question);
+                }
+            }
+        }
     }
 
     private void loadRegisteredCoursesModel() {
         DefaultTableModel clearModel = (DefaultTableModel) tbl_registered_course.getModel();
         clearModel.setRowCount(0);
-        int i = 0;
+        int i;
         for (Registered obj : Registered.getList()) {
             if(obj.getStudent_id() == student.getId()) {
                 i = 0;
