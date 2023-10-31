@@ -78,4 +78,4 @@ Operatörler, sistemdeki tüm patikaları, eğitimleri, içerikleri ve quizleri 
 Kayıt ol ekranında sadece öğrenciler sisteme kayıt yapabilirler.
 
 
-Sistemdeki operatörleri yazılımcı ekler, eğitmenleride sadece operatörler ekleyebilir.
+Sistemdeki operatörleri yazılımcı ekler, eğitmenleride sadece operatörler ekleyebilir
