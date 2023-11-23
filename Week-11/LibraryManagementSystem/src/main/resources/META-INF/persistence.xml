@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+
+    <persistence-unit name="postgrePU">
+        <properties>
+            <!-- JDBC URL Server:Port/DBName -->
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/libraryManagementSystem"/>
+
+            <!-- DB Driver -->
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+
+            <!-- DB User -->
+            <property name="javax.persistence.jdbc.user" value="postgres"/>
+
+            <!-- DB Pass -->
+            <property name="javax.persistence.jdbc.password" value="postgres"/>
+
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+
+            <!-- Show SQL in console-->
+            <property name="hibernate.show_sql" value="true"/>
+
+            <!-- Show SQL formatted -->
+            <property name="hibernate.format_sql" value="true"/>
+
+        </properties>
+
+    </persistence-unit>
+</persistence>
