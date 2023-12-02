@@ -17,7 +17,7 @@ public class BookManager implements IBookService {
     }
 
     @Override
-    public Book getById(int id) {
+    public Book getById(Long id) {
         return this.bookRepo.findById(id).orElseThrow();
     }
 
@@ -27,7 +27,7 @@ public class BookManager implements IBookService {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         this.bookRepo.delete(this.getById(id));
     }
 

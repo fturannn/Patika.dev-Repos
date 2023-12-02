@@ -24,7 +24,7 @@ public class AuthorController {
 
     @GetMapping("/authors/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Author getById(@PathVariable("id") int id) {
+    public Author getById(@PathVariable("id") Long id) {
         return this.authorService.getById(id);
     }
 
@@ -36,7 +36,7 @@ public class AuthorController {
 
     @DeleteMapping("/authors/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public String delete(@PathVariable("id") int id) {
+    public String delete(@PathVariable("id") Long id) {
         if (this.getById(id).getBookList().isEmpty()) {
             this.authorService.delete(id);
             return "İşlem başarılı!";

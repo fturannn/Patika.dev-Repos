@@ -16,7 +16,7 @@ public class AuthorManager implements IAuthorService {
     }
 
     @Override
-    public Author getById(int id) {
+    public Author getById(Long id) {
         return this.authorRepo.findById(id).orElseThrow();
     }
 
@@ -26,7 +26,7 @@ public class AuthorManager implements IAuthorService {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         this.authorRepo.delete(this.getById(id));
     }
 

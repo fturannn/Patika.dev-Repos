@@ -5,9 +5,9 @@ import dev.patika.RestApiDevelopment.entities.Author;
 import java.util.List;
 
 public interface IAuthorService {
-    Author getById(int id);
+    Author getById(Long id);
     Author save(Author author);
-    void delete(int id);
+    void delete(Long id);
     Author update(Author author);
     List<Author> findAll();
 }
