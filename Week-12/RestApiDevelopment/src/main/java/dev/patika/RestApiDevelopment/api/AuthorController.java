@@ -37,12 +37,7 @@ public class AuthorController {
     @DeleteMapping("/authors/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String delete(@PathVariable("id") Long id) {
-        if (this.getById(id).getBookList().isEmpty()) {
-            this.authorService.delete(id);
-            return "İşlem başarılı!";
-        } else {
-            return "Sistemde yazara ait kitaplar var. Bu yazar silinemedi!";
-        }
+        return this.authorService.delete(id);
     }
 
     @PutMapping("/authors")

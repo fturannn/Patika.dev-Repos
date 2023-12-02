@@ -26,8 +26,13 @@ public class AuthorManager implements IAuthorService {
     }
 
     @Override
-    public void delete(Long id) {
-        this.authorRepo.delete(this.getById(id));
+    public String delete(Long id) {
+        if (this.getById(id).getBookList().isEmpty()) {
+            this.authorRepo.delete(this.getById(id));
+            return "İşlem başarılı!";
+        } else {
+            return "Sistemde yazara ait kitaplar var. Bu yazar silinemedi!";
+        }
     }
 
     @Override

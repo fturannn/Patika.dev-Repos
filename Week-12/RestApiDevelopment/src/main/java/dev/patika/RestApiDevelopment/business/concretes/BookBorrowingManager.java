@@ -3,8 +3,11 @@ package dev.patika.RestApiDevelopment.business.concretes;
 import dev.patika.RestApiDevelopment.business.abstracts.IBookBorrowingService;
 import dev.patika.RestApiDevelopment.dao.BookBorrowingRepo;
 import dev.patika.RestApiDevelopment.entities.BookBorrowing;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
+@Service
 public class BookBorrowingManager implements IBookBorrowingService {
     private final BookBorrowingRepo bookBorrowingRepo;
 

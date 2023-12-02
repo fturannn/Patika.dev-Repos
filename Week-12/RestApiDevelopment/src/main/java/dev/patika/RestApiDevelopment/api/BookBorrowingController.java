@@ -16,31 +16,31 @@ public class BookBorrowingController {
         this.bookBorrowingService = bookBorrowingService;
     }
 
-    @GetMapping("/bookborrowing")
+    @GetMapping("/bookborrowings")
     @ResponseStatus(HttpStatus.OK)
     public List<BookBorrowing> findAll() {
         return this.bookBorrowingService.findAll();
     }
 
-    @GetMapping("/bookborrowing/{id}")
+    @GetMapping("/bookborrowings/{id}")
     @ResponseStatus(HttpStatus.OK)
     public BookBorrowing getById(@PathVariable("id") Long id) {
         return this.bookBorrowingService.getById(id);
     }
 
-    @PostMapping("/bookborrowing")
+    @PostMapping("/bookborrowings")
     @ResponseStatus(HttpStatus.CREATED)
     public String save(@RequestBody BookBorrowing bookBorrowing) {
         return this.bookBorrowingService.save(bookBorrowing);
     }
 
-    @DeleteMapping("/bookborrowing/{id}")
+    @DeleteMapping("/bookborrowings/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable("id") Long id) {
         this.bookBorrowingService.delete(id);
     }
 
-    @PutMapping("/bookborrowing")
+    @PutMapping("/bookborrowings")
     @ResponseStatus(HttpStatus.OK)
     public BookBorrowing update(@RequestBody BookBorrowing bookBorrowing) {
         return this.bookBorrowingService.update(bookBorrowing);
