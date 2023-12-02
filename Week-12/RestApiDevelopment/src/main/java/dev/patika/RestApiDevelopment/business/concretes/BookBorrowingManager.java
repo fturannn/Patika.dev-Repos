@@ -38,11 +38,13 @@ public class BookBorrowingManager implements IBookBorrowingService {
     }
 
     @Override
-    public BookBorrowing update(BookBorrowing bookBorrowing) {
+    public String update(BookBorrowing bookBorrowing) {
         if (bookBorrowing.getId() == 0) {
             throw new RuntimeException("Lütfen id değeri olan bir entity giriniz!");
+        } else {
+            this.bookBorrowingRepo.save(bookBorrowing);
+            return "İşlem başarılı!";
         }
-        return this.bookBorrowingRepo.save(bookBorrowing);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package dev.patika.RestApiDevelopment.business.abstracts;
 
 import dev.patika.RestApiDevelopment.entities.Author;
-
 import java.util.List;
 
 public interface IAuthorService {

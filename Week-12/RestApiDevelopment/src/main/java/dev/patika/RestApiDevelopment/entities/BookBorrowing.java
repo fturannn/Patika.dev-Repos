@@ -1,6 +1,7 @@
 package dev.patika.RestApiDevelopment.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,10 +17,14 @@ public class BookBorrowing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bookBorrowing_id", columnDefinition = "serial")
-    private long id;
+    private Long id;
 
     @Column(name = "bookBorrowing_borrower_name", nullable = false)
     private String borrowerName;
+
+    @Column(name = "bookBorrowing_borrower_email", nullable = false)
+    @Email
+    private String borrowerEmail;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "bookBorrowing_borrowing_date", nullable = false)

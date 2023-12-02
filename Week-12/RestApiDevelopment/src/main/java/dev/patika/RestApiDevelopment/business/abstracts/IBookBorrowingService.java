@@ -7,6 +7,6 @@ public interface IBookBorrowingService {
     BookBorrowing getById(Long id);
     String save(BookBorrowing bookBorrowing);
     void delete(Long id);
-    BookBorrowing update(BookBorrowing bookBorrowing);
+    String update(BookBorrowing bookBorrowing);
     List<BookBorrowing> findAll();
 }
