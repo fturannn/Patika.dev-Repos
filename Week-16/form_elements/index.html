@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Elemanları</title>
+</head>
+<body>
+    <form style="border: solid black 2px; text-align: center; background-color: rgb(250, 223, 211);">
+        <h1>Bilgi Formu</h1>
+
+        <!-- First name Input -->
+        <label for="fname">Adı:</label><br>
+        <input type="text" id="fname" name="fname" required><br><br>
+
+        <!-- Last name Input -->
+        <label for="lname">Soyadı:</label><br>
+        <input type="text" id="lname" name="lname" required><br><br>
+
+        <!-- Email Input -->
+        <label for="email">E-posta:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <!-- Password Input -->
+        <label for="pwd">Şifre:</label><br>
+        <input type="password" id="pwd" name="pwd" minlength="8" required><br><br>
+
+        <!-- Radio Input -->
+        <label for="male">Erkek</label>
+        <input type="radio" id="male" name="gender" value="male"><br>
+        <label for="female">Kadın</label>
+        <input type="radio" id="female" name="gender" value="female"><br><br>
+
+        <!-- Select Input -->
+        <label for="fruits">Favori meyveniz:</label><br>
+        <select name="fruits" id="fruits">
+            <option value="apple">Elma</option>
+            <option value="watermelon">Karpuz</option>
+            <option value="banana">Muz</option>
+            <option value="kiwi">Kivi</option>
+            <option value="orange">Portakal</option>
+            <option value="strawberry">Çilek</option>
+        </select><br><br>
+
+        <!-- Text Input -->
+        <textarea name="message" id="message" cols="30" rows="10" placeholder="Mesajınızı giriniz" style="border-radius: 5px;"></textarea><br>
+
+         <input type="submit" value="Gönder" style="margin-bottom: 10px;">
+    </form>
+</body>
+</html>
