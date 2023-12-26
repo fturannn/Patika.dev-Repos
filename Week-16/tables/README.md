@@ -1,0 +1,3 @@
+# HTML Pratik - Hayvanlar Alemi
+
+Bu pratikte hayvanlar alemini kısaca anlatan bir websitesi hazırladım. Hayvanları 3 alt başlıkta "Memeliler", "Sürüngenler" ve "Kuşlar" olarak ayırdım ve bu başlıklar altında bu hayvan grupları hakkında kısa bilgiler içeren paragraflar yazdım. Her paragraf başına, her hayvan grubuna mensup bir canlının örnek resmini ekledim. Sayfa sonunda ise daha fazla bilgi için ziyaret edilecek sayfanın linkini paylaştım.
