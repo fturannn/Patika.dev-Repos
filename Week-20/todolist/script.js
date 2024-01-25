@@ -50,6 +50,7 @@ function newElement() {
     let li = document.createElement("li");
     let inputValue = document.getElementById("task").value;
     let text = document.getElementById("task");
+    
     if (inputValue === "" || inputValue.replace(/^\s+|\s+$/g, "").length == 0) {
         var toastElList = [].slice.call(document.querySelectorAll('.error'))
         var toastList = toastElList.map(function(toastEl) {
