@@ -1,6 +1,4 @@
 import React from "react";
-import { useContext } from 'react';
-import { AppContext } from '../App';
 import data from "../data";
 import { useState, useEffect } from "react";
 
