@@ -77,11 +77,6 @@
   cursor: pointer;
 }
 
-.sell {
-  background: linear-gradient(180deg,#f53b82,#f53b57);
-  color: white;
-}
-
 .count {
   border: 1px solid rgba(0, 0, 0, 0.269);
   width: 100%;
