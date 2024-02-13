@@ -3,16 +3,8 @@ import data from "../data";
 import { useState, useEffect } from "react";
 
 const Receipt = () => {
-  const [time, setTime] = useState(new Date());
+
   let total = 0;
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(new Date());
-    }, 0);
-
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <div className="receipt-container">
@@ -29,7 +21,7 @@ const Receipt = () => {
           }
         })}
       </ul>
-      <p>total: {total}</p>
+      <p>TOTAL: {total}</p>
     </div>
   );
 };
