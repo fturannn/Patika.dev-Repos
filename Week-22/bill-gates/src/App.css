@@ -102,4 +102,30 @@
   justify-content: center;
   margin-bottom: 12px;
   background-color: white;
+  padding: 24px 0;
+}
+
+.receipt-container h2 {
+  margin-bottom: 12px;
+}
+
+.receipt-container ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.receipt-item {
+  font-size: 18px;
+  text-align: center;
+}
+
+.line {
+  height: 3px;
+  width: 250px;
+  margin: 12px 0;
+  background-color: black;
+}
+
+.total {
+  font-size: 28px;
 }

@@ -14,14 +14,15 @@ const Receipt = () => {
           if (item.count > 0) {
             total += item.price * item.count;
             return (
-              <li>
+              <li className="receipt-item">
                 {item.title} x{item.count} ${item.price * item.count}
               </li>
             );
           }
         })}
       </ul>
-      <p>TOTAL: {total}</p>
+      <div className="line"></div>
+      <p className="total">TOTAL: {total}</p>
     </div>
   );
 };
