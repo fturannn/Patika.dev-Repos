@@ -1,0 +1,51 @@
+footer {
+    background-color: #355592;
+    padding-bottom: 28px;
+  }
+  
+  .footer-container {
+    width: 60%;
+    margin: auto;
+  }
+  
+  .footer-container img {
+    width: 25%;
+  }
+  
+  .footer-container p {
+    color: aliceblue;
+    font-size: 12px;
+    margin-bottom: 15px;
+  }
+  
+  .info-and-links {
+    display: flex;
+    justify-content: space-around;
+    gap: 5%;
+  }
+  
+  .information h3 {
+    font-weight: 500;
+    color: aliceblue;
+  }
+  
+  .information a {
+    display: block;
+    text-decoration: none;
+    color: aliceblue;
+    font-size: 12px;
+    margin-top: 10px;
+  }
+  
+  .helpful-links h3 {
+    font-weight: 500;
+    color: aliceblue;
+  }
+  
+  .helpful-links a {
+    display: block;
+    text-decoration: none;
+    color: aliceblue;
+    font-size: 12px;
+    margin-top: 10px;
+  }

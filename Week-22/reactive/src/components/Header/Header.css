@@ -1,0 +1,67 @@
+header {
+    background-image: url(./src/assets/hero-man.jpg);
+    background-size: cover;
+  }
+  
+  .container-top {
+    margin: auto;
+    width: 60%;
+    padding-top: 144px;
+  }
+  
+  .container-top h3 {
+    display: inline-block;
+    color: aliceblue;
+    background-color: #355592;
+    padding: 4px 10px;
+    border-radius: 5px;
+    text-shadow: 2px 2px 2px black;
+    margin-bottom: 5px;
+  }
+  
+  h1 {
+    color: aliceblue;
+    font-size: 72px;
+    text-shadow: 2px 2px 2px black;
+    margin-bottom: 5px;
+  }
+  
+  .container-top p {
+    color: aliceblue;
+    background-color: rgba(0, 0, 0, 0.6);
+    text-shadow: 2px 2px 2px black;
+    font-size: 28px;
+    margin-bottom: 5px;
+  }
+  
+  #signup-btn {
+    padding: 8px 24px;
+    background-color: #355592;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    color: aliceblue;
+    font-size: 16px;
+    margin-bottom: 54px;
+    margin-right: 32px;
+    cursor: pointer;
+  }
+  
+  #signup-btn:hover {
+    background-color: #4d7ed9;
+  }
+  
+  #details-btn {
+    padding: 8px 24px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: solid 1px aliceblue;
+    border-radius: 5px;
+    font-weight: bold;
+    color: aliceblue;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  #details-btn:hover {
+    background-color: black;
+  }

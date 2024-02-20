@@ -1,0 +1,52 @@
+.bmi {
+    width: 70%;
+    margin: auto;
+    display: flex;
+    gap: 15%;
+    padding-top: 54px;
+    padding-bottom: 54px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .bmi-content {
+    width: 50%;
+  }
+  
+  .bmi-content h2 {
+    color: #355592;
+    margin-bottom: 15px;
+    font-size: 40px;
+  }
+  
+  .bmi-content p {
+    margin-top: 24px;
+  }
+  
+  .calculator {
+    margin-top: 24px;
+  }
+  
+  .bmi-index {
+    position: relative;
+  }
+  
+  .bmi-index h3 {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .bmi-img {
+    width: 100%;
+  }
+  
+  .arrow-up {
+    position: absolute;
+    left: 7%;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 20px solid #fe9b01;
+    transition: 0.5s;
+  }

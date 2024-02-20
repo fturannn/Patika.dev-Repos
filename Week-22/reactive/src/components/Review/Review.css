@@ -1,0 +1,67 @@
+#review {
+    background-color: #f1f8ff;
+  }
+  
+  .review-container {
+    width: 60%;
+    margin: auto;
+  }
+  
+  .client-reviews {
+    display: flex;
+    gap: 15%;
+    padding-bottom: 96px;
+  }
+  
+  .client-info {
+    display: flex;
+    gap: 6%;
+  }
+  
+  .client-info img {
+    border-radius: 50%;
+    width: 3rem;
+  }
+  
+  .name p:first-child {
+    font-weight: 500;
+  }
+  
+  .name p:last-child {
+    font-size: 12px;
+  }
+  
+  .client-comment {
+    margin-top: 3%;
+    position: relative;
+  }
+  
+  .client-comment p {
+    background-color: #355592;
+    color: aliceblue;
+    font-size: 12px;
+    width: 100%;
+    padding: 10px 20px;
+  }
+  
+  .client-comment::after {
+    position: absolute;
+    content: "";
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+    background-color: #8096be;
+    width: 2rem;
+    height: 2rem;
+    top: 100%;
+    left: 0;
+  }
+  
+  .client-comment::before {
+    position: absolute;
+    content: "";
+    background-color: #8096be;
+    width: 2rem;
+    height: 2rem;
+    top: 100%;
+    right: 0%;
+    clip-path: polygon(100% 0, 0 0, 0 100%);
+  }

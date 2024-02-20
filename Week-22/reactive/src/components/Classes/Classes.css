@@ -1,0 +1,94 @@
+#classes {
+    position: relative;
+  }
+  
+  .bg-shape {
+    position: absolute;
+    right: 0;
+    z-index: -1;
+    height: 100%;
+    width: 60%;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 25% 100%, 12.5% 50%);
+    background: #f6f6f6;
+  }
+  
+  .classes-container {
+    margin: auto;
+    width: 60%;
+  }
+  
+  .titles {
+    text-align: center;
+    padding-top: 54px;
+    color: #355592;
+    margin-bottom: 15px;
+    font-size: 32px;
+  }
+  
+  .line-item {
+    width: 75px;
+    border: solid 4px #fe9b01;
+    margin: auto;
+    border-radius: 100px;
+    margin-bottom: 32px;
+  }
+  
+  .desc-p {
+    text-align: center;
+    margin-bottom: 52px;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: space-around;
+    margin: auto;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .group-btn {
+    position: relative;
+    font-weight: bold;
+    background-color: #355592;
+    color: aliceblue;
+    padding: 8px 20px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.5s;
+  }
+  
+  .selection {
+    position: absolute;
+    top: 100%;
+    left: 40%;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #fe9b01;
+    transition: 0.5s;
+  }
+  
+  .group-content {
+    margin-top: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10%;
+  }
+  
+  .class-img {
+    width: 50%;
+  }
+  
+  .desc h3 {
+    font-size: 24px;
+  }
+  
+  .desc p {
+    font-size: 16px;
+    margin: 24px 0px;
+    line-height: 24px;
+  }
